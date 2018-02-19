@@ -172,9 +172,20 @@ void checkCard (rfidCard* card) {
         // if there is no response and the card UID doesn't exist
         // in the
         for (int i = 1; i <= 3; i++)
-        {
-                // GET the JSON from the server
-                String cardInfo = requestCardPermissionsJson(checkingCard.uid);
+        {       
+                String cardInfo = "";
+                
+                // If the WiFi is connected then try to get the data from the
+                // server.
+                if (WiFi.status() == WL_CONNECTED)
+                {
+                    // GET the JSON from the server
+                    cardInfo = requestCardPermissionsJson(checkingCard.uid);
+                } else 
+                {
+                    Serial.println(F("Wifi not connected. Not checking server."));
+                }
+                
                 // Attempt to process the data, load it into the currentCard struct.
                 // Failure to GET from the server or
                 if (processPermissionsJson(cardInfo, &checkingCard))
