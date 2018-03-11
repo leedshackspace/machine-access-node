@@ -354,11 +354,11 @@ void loop() {
                 }
                 if (currentCard.uid!= presentedCard)
                 {
-                        currentCard.firstSeen = millis();
                         currentCard.uid = presentedCard;
                         Serial.print(F("\r\nRead Card: "));
                         Serial.println(presentedCard);
                         checkCard(&currentCard);
+                        currentCard.firstSeen = millis();
                         p = 0;
                 } else {
                         if (p > 40)
